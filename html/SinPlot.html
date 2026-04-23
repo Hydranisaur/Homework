@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Plot of sin(t)</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-10-03">
+<meta name="DC.source" content="SinPlot.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Plot of sin(t)</h1>
+<pre class="codeinput">t = 0:0.1:20;
+y = sin(t)
+
+plot (t,y)
+title(<span class="string">'sin function'</span>)
+xlabel(<span class="string">'Time in seconds'</span>)
+ylabel(<span class="string">'Y value'</span>)
+
+hold <span class="string">on</span>
+plot (t, 1/3 * y)
+
+legend(<span class="string">'y'</span>, <span class="string">'1/3*y'</span>)
+</pre>
+<pre class="codeoutput">
+y =
+
+  Columns 1 through 7
+
+         0    0.0998    0.1987    0.2955    0.3894    0.4794    0.5646
+
+  Columns 8 through 14
+
+    0.6442    0.7174    0.7833    0.8415    0.8912    0.9320    0.9636
+
+  Columns 15 through 21
+
+    0.9854    0.9975    0.9996    0.9917    0.9738    0.9463    0.9093
+
+  Columns 22 through 28
+
+    0.8632    0.8085    0.7457    0.6755    0.5985    0.5155    0.4274
+
+  Columns 29 through 35
+
+    0.3350    0.2392    0.1411    0.0416   -0.0584   -0.1577   -0.2555
+
+  Columns 36 through 42
+
+   -0.3508   -0.4425   -0.5298   -0.6119   -0.6878   -0.7568   -0.8183
+
+  Columns 43 through 49
+
+   -0.8716   -0.9162   -0.9516   -0.9775   -0.9937   -0.9999   -0.9962
+
+  Columns 50 through 56
+
+   -0.9825   -0.9589   -0.9258   -0.8835   -0.8323   -0.7728   -0.7055
+
+  Columns 57 through 63
+
+   -0.6313   -0.5507   -0.4646   -0.3739   -0.2794   -0.1822   -0.0831
+
+  Columns 64 through 70
+
+    0.0168    0.1165    0.2151    0.3115    0.4048    0.4941    0.5784
+
+  Columns 71 through 77
+
+    0.6570    0.7290    0.7937    0.8504    0.8987    0.9380    0.9679
+
+  Columns 78 through 84
+
+    0.9882    0.9985    0.9989    0.9894    0.9699    0.9407    0.9022
+
+  Columns 85 through 91
+
+    0.8546    0.7985    0.7344    0.6630    0.5849    0.5010    0.4121
+
+  Columns 92 through 98
+
+    0.3191    0.2229    0.1245    0.0248   -0.0752   -0.1743   -0.2718
+
+  Columns 99 through 105
+
+   -0.3665   -0.4575   -0.5440   -0.6251   -0.6999   -0.7677   -0.8278
+
+  Columns 106 through 112
+
+   -0.8797   -0.9228   -0.9566   -0.9809   -0.9954   -1.0000   -0.9946
+
+  Columns 113 through 119
+
+   -0.9792   -0.9540   -0.9193   -0.8755   -0.8228   -0.7620   -0.6935
+
+  Columns 120 through 126
+
+   -0.6181   -0.5366   -0.4496   -0.3582   -0.2632   -0.1656   -0.0663
+
+  Columns 127 through 133
+
+    0.0336    0.1332    0.2315    0.3275    0.4202    0.5087    0.5921
+
+  Columns 134 through 140
+
+    0.6696    0.7404    0.8038    0.8592    0.9060    0.9437    0.9720
+
+  Columns 141 through 147
+
+    0.9906    0.9993    0.9980    0.9868    0.9657    0.9349    0.8948
+
+  Columns 148 through 154
+
+    0.8457    0.7883    0.7229    0.6503    0.5712    0.4864    0.3967
+
+  Columns 155 through 161
+
+    0.3031    0.2065    0.1078    0.0080   -0.0919   -0.1909   -0.2879
+
+  Columns 162 through 168
+
+   -0.3821   -0.4724   -0.5581   -0.6381   -0.7118   -0.7784   -0.8371
+
+  Columns 169 through 175
+
+   -0.8876   -0.9291   -0.9614   -0.9841   -0.9969   -0.9998   -0.9927
+
+  Columns 176 through 182
+
+   -0.9756   -0.9488   -0.9126   -0.8672   -0.8132   -0.7510   -0.6813
+
+  Columns 183 through 189
+
+   -0.6048   -0.5223   -0.4346   -0.3425   -0.2470   -0.1490   -0.0495
+
+  Columns 190 through 196
+
+    0.0504    0.1499    0.2478    0.3433    0.4354    0.5231    0.6055
+
+  Columns 197 through 201
+
+    0.6820    0.7516    0.8137    0.8676    0.9129
+
+</pre>
+<img vspace="5" hspace="5" src="SinPlot_01.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Plot of sin(t)
+t = 0:0.1:20;
+y = sin(t)
+
+plot (t,y)
+title('sin function')
+xlabel('Time in seconds')
+ylabel('Y value')
+
+hold on
+plot (t, 1/3 * y)
+
+legend('y', '1/3*y')
+##### SOURCE END #####
+-->
+</body>
+</html>

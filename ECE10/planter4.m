@@ -1,0 +1,134 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  ECE 10, 4-side planter
+%  Prof. Dejan Milutinovic
+%  UC Santa Cruz
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%corners of the bottom base
+clear all;
+close all;
+d1=[1;0;0];
+R=RotMatrix([0;0;1],pi/2);
+d2=R*d1;
+d3=R*d2;
+d4=R*d3;
+%draw vector d1  
+plot3([0 d1(1)],[0 d1(2)], [0 d1(3)],'r-o');
+axis([-6 6 -6 6 -1 11]);
+axis square
+hold on
+%draw vectors d2, d3, d4
+plot3([0 d2(1)],[0 d2(2)], [0 d2(3)],'r-');
+plot3([0 d3(1)],[0 d3(2)], [0 d3(3)],'r-');
+plot3([0 d4(1)],[0 d4(2)], [0 d4(3)],'r-');
+%draw the edges of the bottom base
+plot3([d1(1) d2(1) d3(1) d4(1) d1(1)],...
+      [d1(2) d2(2) d3(2) d4(2) d1(2)],...
+      [d1(3) d2(3) d3(3) d4(3) d1(3)],'b-');  
+%vector D1
+R=RotMatrix([0;0;1],pi/2);
+nd1=R*d1;
+%R=RotMatrix(nd1,-(pi/2-30*pi/180));
+alpha=60*pi/180;
+R=RotMatrix(nd1,-alpha);
+D1=d1+R*d1/sqrt(d1'*d1)*2;
+R=RotMatrix([0;0;1],pi/2);
+%corners of the upper base 
+D2=R*D1;
+D3=R*D2;
+D4=R*D3;
+%draw the vectors of the upper base
+plot3([0 D1(1)],[0 D1(2)], [0 D1(3)],'r-o');
+hold on
+plot3([0 D2(1)],[0 D2(2)], [0 D2(3)],'r-');
+plot3([0 D3(1)],[0 D3(2)], [0 D3(3)],'r-');
+plot3([0 D4(1)],[0 D4(2)], [0 D4(3)],'r-');
+%draw the edges of the upper base
+plot3([D1(1) D2(1) D3(1) D4(1) D1(1)],...
+      [D1(2) D2(2) D3(2) D4(2) D1(2)],...
+      [D1(3) D2(3) D3(3) D4(3) D1(3)]);    
+%draw the edges connecting the bottom and upper bases
+plot3([d1(1) D1(1)],[d1(2) D1(2)],[d1(3) D1(3)],'k-');
+plot3([d2(1) D2(1)],[d2(2) D2(2)],[d2(3) D2(3)],'k-');
+plot3([d3(1) D3(1)],[d3(2) D3(2)],[d3(3) D3(3)],'k-');
+plot3([d4(1) D4(1)],[d4(2) D4(2)],[d4(3) D4(3)],'k-');
+
+
+%edge vectors of the 1st side 
+edg1=d2-d1;
+edg9=D1-d1;
+edg10=D2-d2;
+%angle of the 1st side 
+v1=cross(edg9,edg1);
+v1=v1/sqrt(v1'*v1);
+plot3([d1(1) d1(1)+v1(1)],[d1(2) d1(2)+v1(2)],...
+    [d1(3) d1(3)+v1(3)],'b-','linewidth',2);
+rotAngle=acos(v1(3));
+grid on
+
+%edge vectors of the 1st side
+edg1=d2-d1;
+edg9=D1-d1;
+edg10=D2-d2;
+%1st side vector rotations 
+R=RotMatrix(edg1,rotAngle);
+edg9_1=R*edg9;
+edg10_1=R*edg10;
+D1pln_1=d1+edg9_1;
+D2pln_1=d2+edg10_1;
+plot3([d1(1) D1pln_1(1) D2pln_1(1) d2(1)],...
+      [d1(2) D1pln_1(2) D2pln_1(2) d2(2)],...
+      [d1(3) D1pln_1(3) D2pln_1(3) d2(3)],'k-');
+return
+%edge vectors of the 2nd side
+edg2=d3-d2;
+edg10=D2-d2;
+edg11=D3-d3;
+%2nd side vector rotations 
+R=RotMatrix(edg2,rotAngle);
+edg10_2=R*edg10;
+edg11_2=R*edg11;
+D2pln_2=d2+edg10_2;
+D3pln_2=d3+edg11_2;
+plot3([d2(1) D2pln_2(1) D3pln_2(1) d3(1)],...
+      [d2(2) D2pln_2(2) D3pln_2(2) d3(2)],...
+      [d2(3) D2pln_2(3) D3pln_2(3) d3(3)],'k-');
+%edge vectors of the 3rd side
+edg3=d4-d3;
+edg11=D3-d3;
+edg12=D4-d4;
+%3rd side vector rotations 
+R=RotMatrix(edg3,rotAngle);
+edg11_3=R*edg11;
+edg12_3=R*edg12;
+D3pln_3=d3+edg11_3;
+D4pln_3=d4+edg12_3;
+plot3([d3(1) D3pln_3(1) D4pln_3(1) d4(1)],...
+      [d3(2) D3pln_3(2) D4pln_3(2) d4(2)],...
+      [d3(3) D3pln_3(3) D4pln_3(3) d4(3)],'k-');
+%edge vectors of the 4th side (only one,
+%the others are already defined) 
+edg4=d1-d4;
+%4th side vector rotations 
+R=RotMatrix(edg4,rotAngle);
+edg9_4=R*edg9;
+edg12_4=R*edg12;
+D1pln_4=d1+edg9_4;
+D4pln_4=d4+edg12_4;
+plot3([d4(1) D4pln_4(1) D1pln_4(1) d1(1)],...
+      [d4(2) D4pln_4(2) D1pln_4(2) d1(2)],...
+      [d4(3) D4pln_4(3) D1pln_4(3) d1(3)],'k-');
+figure(2)
+%draw the template 
+plot([d1(1) d2(1) d3(1) d4(1) d1(1)],...
+     [d1(2) d2(2) d3(2) d4(2) d1(2)],'k-','linewidth',2);
+hold on
+axis([-3.1 3.1 -3.1 3.1]);
+axis square
+plot([d1(1) D1pln_1(1) D2pln_1(1) d2(1)],...
+     [d1(2) D1pln_1(2) D2pln_1(2) d2(2)],'k-','linewidth',2);
+plot([d2(1) D2pln_2(1) D3pln_2(1) d3(1)],...
+     [d2(2) D2pln_2(2) D3pln_2(2) d3(2)],'k-','linewidth',2);
+plot([d3(1) D3pln_3(1) D4pln_3(1) d4(1)],...
+     [d3(2) D3pln_3(2) D4pln_3(2) d4(2)],'k-','linewidth',2);
+plot([d4(1) D4pln_4(1) D1pln_4(1) d1(1)],...
+     [d4(2) D4pln_4(2) D1pln_4(2) d1(2)],'k-','linewidth',2);

@@ -1,0 +1,633 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Lab3_3_starter</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-10-22">
+<meta name="DC.source" content="Lab3_3_starter.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">TODO: Any setting that you need to run for loop.</a>
+</li>
+<li>
+<a href="#4">TODO: Update L1, M, R1, sL, sR with the current</a>
+</li>
+<li>
+<a href="#5">TODO: Update uL, uR using your logic to trace the line track</a>
+</li>
+<li>
+<a href="#7">TODO : Plot L1, M, R1 sensor data</a>
+</li>
+<li>
+<a href="#8">TODO : Plot Two wheels' speed data</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">
+<span class="comment">% ==================== Lab 3-3: Line Tracing (Solution) ==================== %</span>
+<span class="comment">% Uses three line sensors (L1, M, L2). Sensor = 1 when over black line.</span>
+close <span class="string">all</span>
+
+<span class="comment">% --- Adjust COM port to match your Micro:bit (check Device Manager / ls /dev/tty* on Mac/Linux)</span>
+<span class="comment">% To list available ports in MATLAB, run:</span>
+<span class="comment">% ports = serialportlist("available");</span>
+port = <span class="string">"COM9"</span>;
+baud = 115200;
+
+<span class="keyword">if</span> exist(<span class="string">"s"</span>,<span class="string">"var"</span>)
+    <span class="keyword">if</span> isvalid(s)
+        clear <span class="string">s</span>
+        pause(0.5)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+s = serialport(port, baud);
+configureTerminator(s, <span class="string">"LF"</span>);
+flush(s);
+
+<span class="comment">% --- Controller parameters (tune as needed; 0-255 range)</span>
+N         = 100;  <span class="comment">% number of control iterations</span>
+Ts        = 0.01;  <span class="comment">% loop period (s)</span>
+
+<span class="comment">% --- Logging arrays</span>
+logSensors = zeros(N,3);   <span class="comment">% [L1 M R1]</span>
+logSpeed   = zeros(N,2);   <span class="comment">% [Speed_L Speed_R] from Micro:bit (if provided)</span>
+logCmd     = zeros(N,2);   <span class="comment">% [uL uR] sent</span>
+logTime    = zeros(N,1);
+
+<span class="comment">% --- Ensure robot starts from stop</span>
+writeline(s, sprintf(<span class="string">"%d,%d"</span>, 0, 0));
+</pre>
+<h2 id="2">TODO: Any setting that you need to run for loop.</h2>
+<pre class="codeinput">
+<span class="comment">%================ YOUR INPUT ENDS ===============</span>
+tic; <span class="comment">% Initialize the timer to zero</span>
+<span class="keyword">for</span> i = 1:N
+</pre>
+<pre class="codeinput">    <span class="comment">%Read the last line in communication buffer</span>
+    lastLine = <span class="string">""</span>;
+    <span class="keyword">while</span>(s.NumBytesAvailable&lt;1) <span class="comment">% Wait until buffer has some line.</span>
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> s.NumBytesAvailable &gt; 0
+        <span class="keyword">while</span> s.NumBytesAvailable &gt; 0
+            <span class="comment">% Read one line at a time</span>
+            lastLine = readline(s);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    line = lastLine;
+    t = toc;
+
+    nums = str2double(split(strtrim(line), <span class="string">","</span>)); <span class="comment">%[L1,M,R2,SpeedL,SpeedR]</span>
+
+    <span class="keyword">if</span> numel(nums) &lt; 5 || any(isnan(nums(1:5)))
+        <span class="comment">% If malformed, keep last command and continue</span>
+        fprintf(<span class="string">"[%f] Malformed: %s\n"</span>, t, line);
+        pause(Ts);
+        <span class="keyword">continue</span>; <span class="comment">% This skips the lines below and iterate.</span>
+    <span class="keyword">end</span>
+
+    <span class="comment">% Initialize the current sensor readings variable to NaN=Not-a-Number</span>
+    L1 = NaN; <span class="comment">%L1 sensor value</span>
+    M  = NaN; <span class="comment">%M sensor value</span>
+    R1 = NaN; <span class="comment">%R1 sensor value</span>
+    sL = NaN; <span class="comment">%speed of Left wheel value</span>
+    sR = NaN; <span class="comment">%speed of Right wheel value</span>
+</pre>
+<h2 id="4">TODO: Update L1, M, R1, sL, sR with the current</h2>
+<pre class="codeinput">    L1 = nums(1);
+    M = nums(2);
+    R1 = nums(3);
+    sL = nums(4);
+    sR = nums(5);
+
+    <span class="comment">%============== YOUR INPUT ENDS===============</span>
+
+    logSensors(i,:) = [L1 M R1];
+    logSpeed(i,:)   = [sL sR];
+    logTime(i,:) = t;
+
+    <span class="comment">% ------------------ Line-following logic ------------------ %</span>
+    uL = 0; <span class="comment">% control input to left motor, integer [0, 255]</span>
+    uR = 0; <span class="comment">% control input to right motor, integer [0, 255]</span>
+</pre>
+<h2 id="5">TODO: Update uL, uR using your logic to trace the line track</h2>
+<p>CCW First</p>
+<pre class="codeinput">    <span class="keyword">if</span> (L1 == 1)     <span class="comment">% Left Sensor detection</span>
+        uL = 40;
+        uR = 130;
+
+    <span class="keyword">elseif</span> (R1 == 1) <span class="comment">% Right Sensor detection</span>
+        uL = 130;
+        uR = 40;
+
+    <span class="keyword">else</span>             <span class="comment">% Go straight</span>
+        uL = 70;
+        uR = 70;
+    <span class="keyword">end</span>
+
+    <span class="comment">% My control idea is essentially to just go straight unless the left or</span>
+    <span class="comment">% right line sensor gets triggered. If the left gets triggered, the</span>
+    <span class="comment">% robot needs to turn to the left to stay on the track so it drives</span>
+    <span class="comment">% the right wheel faster than the left. And conversely for the right</span>
+    <span class="comment">% sensor, the robot needs to turn right so I drive the left wheel faster</span>
+    <span class="comment">% than the right until the sensor stops getting triggered. It handled</span>
+    <span class="comment">% straight sections great, and usualy only has to correct a little at</span>
+    <span class="comment">% the end of every turn. This code is nice because it doesn't depend on</span>
+    <span class="comment">% any sensors being active to go forwards. This means loss of the line</span>
+    <span class="comment">% isn't fatal unless the line isn't in between the sensors.</span>
+    <span class="comment">%============== YOUR INPUT ENDS===============</span>
+
+    <span class="comment">% Send motor command</span>
+    cmd = sprintf(<span class="string">"%d,%d"</span>, uL, uR);
+    writeline(s, cmd);
+    logCmd(i,:) = [uL uR];
+
+    <span class="comment">% Optional console log</span>
+    fprintf(<span class="string">"[%s] L1 M R2 = [%d %d %d]  Speeds=[%.1f %.1f]  Cmd=%s\n"</span>, <span class="keyword">...</span>
+        string(t), L1, M, R1, sL, sR, cmd);
+
+
+    pause(Ts); <span class="comment">%control loop pause</span>
+</pre>
+<pre class="codeoutput">[0.012858] L1 M R2 = [1 1 1]  Speeds=[0.0 0.0]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[0.067244] L1 M R2 = [1 1 1]  Speeds=[0.0 0.0]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[0.13514] L1 M R2 = [1 1 1]  Speeds=[0.0 0.0]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[0.21192] L1 M R2 = [1 1 1]  Speeds=[0.0 0.0]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[0.27748] L1 M R2 = [1 1 1]  Speeds=[0.0 0.0]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[0.35447] L1 M R2 = [1 1 1]  Speeds=[0.0 0.0]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[0.43235] L1 M R2 = [1 1 1]  Speeds=[0.0 0.0]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[0.5122] L1 M R2 = [0 0 0]  Speeds=[4.6 5.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[0.59125] L1 M R2 = [0 0 0]  Speeds=[4.6 5.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[0.65572] L1 M R2 = [0 0 0]  Speeds=[4.6 5.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[0.735] L1 M R2 = [0 0 0]  Speeds=[4.6 5.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[0.81425] L1 M R2 = [0 0 0]  Speeds=[22.2 21.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[0.89288] L1 M R2 = [0 0 0]  Speeds=[22.2 21.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[0.97072] L1 M R2 = [0 0 0]  Speeds=[22.2 21.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.0352] L1 M R2 = [1 0 0]  Speeds=[23.8 23.4]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[1.1153] L1 M R2 = [0 0 0]  Speeds=[23.8 23.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.1916] L1 M R2 = [0 0 0]  Speeds=[23.8 23.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.2706] L1 M R2 = [0 0 0]  Speeds=[22.6 22.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.3498] L1 M R2 = [0 0 0]  Speeds=[22.6 22.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.4273] L1 M R2 = [0 0 0]  Speeds=[22.6 22.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.5062] L1 M R2 = [0 0 0]  Speeds=[18.2 18.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.5681] L1 M R2 = [0 0 0]  Speeds=[18.2 18.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.6471] L1 M R2 = [0 0 0]  Speeds=[18.2 18.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.7271] L1 M R2 = [0 0 0]  Speeds=[18.2 18.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[1.8057] L1 M R2 = [1 1 1]  Speeds=[12.4 12.2]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[1.8841] L1 M R2 = [1 1 1]  Speeds=[12.4 12.2]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[1.9485] L1 M R2 = [0 0 0]  Speeds=[12.4 12.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.0285] L1 M R2 = [0 0 0]  Speeds=[9.2 9.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.1082] L1 M R2 = [0 0 0]  Speeds=[9.2 9.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.1867] L1 M R2 = [0 0 0]  Speeds=[9.2 9.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.2514] L1 M R2 = [0 0 0]  Speeds=[4.8 4.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.3319] L1 M R2 = [0 0 0]  Speeds=[4.8 4.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.4106] L1 M R2 = [1 1 1]  Speeds=[4.8 4.8]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[2.4909] L1 M R2 = [1 1 1]  Speeds=[4.8 10.4]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[2.5699] L1 M R2 = [0 0 0]  Speeds=[10.6 10.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.6479] L1 M R2 = [0 0 0]  Speeds=[10.6 10.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.7112] L1 M R2 = [0 0 0]  Speeds=[10.6 10.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.7883] L1 M R2 = [0 0 0]  Speeds=[16.0 15.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.8676] L1 M R2 = [0 0 0]  Speeds=[16.0 15.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[2.9469] L1 M R2 = [0 0 0]  Speeds=[16.0 15.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.0256] L1 M R2 = [0 0 0]  Speeds=[18.0 17.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.1046] L1 M R2 = [0 0 0]  Speeds=[18.0 17.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.1679] L1 M R2 = [0 0 0]  Speeds=[18.0 17.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.2472] L1 M R2 = [0 0 0]  Speeds=[19.6 19.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.3256] L1 M R2 = [0 0 0]  Speeds=[19.6 19.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.4036] L1 M R2 = [0 0 0]  Speeds=[19.6 19.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.4828] L1 M R2 = [0 0 0]  Speeds=[19.6 19.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.5621] L1 M R2 = [0 0 0]  Speeds=[19.4 18.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.6257] L1 M R2 = [0 0 0]  Speeds=[19.4 18.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.705] L1 M R2 = [0 0 0]  Speeds=[19.4 18.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.785] L1 M R2 = [0 0 0]  Speeds=[19.8 19.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[3.8642] L1 M R2 = [1 1 1]  Speeds=[19.8 19.2]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[3.9425] L1 M R2 = [0 0 0]  Speeds=[19.8 19.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.0215] L1 M R2 = [0 0 0]  Speeds=[19.2 17.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.085] L1 M R2 = [0 0 0]  Speeds=[19.2 17.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.1624] L1 M R2 = [0 0 0]  Speeds=[19.2 17.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.2406] L1 M R2 = [0 0 0]  Speeds=[16.8 15.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.3201] L1 M R2 = [0 0 0]  Speeds=[16.8 15.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.3988] L1 M R2 = [0 0 0]  Speeds=[16.8 15.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.4771] L1 M R2 = [0 0 0]  Speeds=[16.8 15.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.5398] L1 M R2 = [0 0 0]  Speeds=[10.0 8.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.6188] L1 M R2 = [0 0 0]  Speeds=[10.0 8.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.6984] L1 M R2 = [0 0 0]  Speeds=[10.0 8.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.7761] L1 M R2 = [0 0 0]  Speeds=[12.4 11.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[4.854] L1 M R2 = [1 1 1]  Speeds=[12.4 11.4]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[4.9307] L1 M R2 = [1 1 1]  Speeds=[12.4 11.4]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[5.0085] L1 M R2 = [0 0 0]  Speeds=[9.4 8.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.0723] L1 M R2 = [0 0 0]  Speeds=[9.4 8.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.1515] L1 M R2 = [0 0 0]  Speeds=[9.4 8.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.2305] L1 M R2 = [0 0 0]  Speeds=[9.4 8.8]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.3103] L1 M R2 = [0 0 0]  Speeds=[21.2 17.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.3898] L1 M R2 = [0 0 0]  Speeds=[21.2 17.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.4541] L1 M R2 = [0 0 0]  Speeds=[21.2 17.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.5331] L1 M R2 = [0 0 0]  Speeds=[22.4 16.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.6131] L1 M R2 = [0 0 0]  Speeds=[22.4 16.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.6919] L1 M R2 = [0 0 0]  Speeds=[22.4 16.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.7564] L1 M R2 = [0 0 0]  Speeds=[22.8 18.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.8353] L1 M R2 = [0 0 0]  Speeds=[22.8 18.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.915] L1 M R2 = [0 0 0]  Speeds=[22.8 18.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[5.9936] L1 M R2 = [0 0 0]  Speeds=[22.0 18.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.073] L1 M R2 = [0 0 0]  Speeds=[22.0 18.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.1526] L1 M R2 = [0 0 0]  Speeds=[22.0 18.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.2158] L1 M R2 = [0 0 0]  Speeds=[22.0 18.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.2956] L1 M R2 = [0 0 0]  Speeds=[18.8 16.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.3757] L1 M R2 = [0 0 0]  Speeds=[18.8 16.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.4547] L1 M R2 = [1 0 0]  Speeds=[18.8 16.2]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[6.5191] L1 M R2 = [1 0 0]  Speeds=[11.6 3.6]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[6.5987] L1 M R2 = [1 0 0]  Speeds=[11.6 3.6]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[6.6785] L1 M R2 = [1 0 0]  Speeds=[11.6 3.6]  Cmd=40,130
+</pre>
+<pre class="codeoutput">[6.7573] L1 M R2 = [0 0 0]  Speeds=[4.8 5.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.8339] L1 M R2 = [0 0 0]  Speeds=[4.8 5.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.912] L1 M R2 = [0 0 0]  Speeds=[4.8 5.0]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[6.9753] L1 M R2 = [0 0 0]  Speeds=[11.6 10.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[7.0541] L1 M R2 = [0 0 0]  Speeds=[11.6 10.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[7.1322] L1 M R2 = [0 0 0]  Speeds=[11.6 10.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[7.2106] L1 M R2 = [0 0 0]  Speeds=[11.6 10.2]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[7.2902] L1 M R2 = [0 0 0]  Speeds=[17.6 7.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[7.3698] L1 M R2 = [0 0 0]  Speeds=[17.6 7.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[7.4483] L1 M R2 = [0 0 0]  Speeds=[17.6 7.4]  Cmd=70,70
+</pre>
+<pre class="codeoutput">[7.5122] L1 M R2 = [0 0 0]  Speeds=[11.0 1.8]  Cmd=70,70
+</pre>
+<pre class="codeinput">
+<span class="keyword">end</span>
+
+<span class="comment">% --- Stop and cleanup</span>
+writeline(s, sprintf(<span class="string">"%d,%d"</span>, 0, 0));
+clear <span class="string">s</span>
+</pre>
+<h2 id="7">TODO : Plot L1, M, R1 sensor data</h2>
+<pre class="codeinput">figure(1)
+plot(logTime, logSensors, <span class="string">'LineWidth'</span>, 2)
+xlabel(<span class="string">"Time (s)"</span>)
+ylabel(<span class="string">"Sensor Data"</span>)
+legend({<span class="string">"L1"</span>, <span class="string">"M"</span>, <span class="string">"R1"</span>})
+title(<span class="string">"Line Sensor Data"</span>)
+
+<span class="comment">% You can infer which direction the robot is going around the track by</span>
+<span class="comment">% which sensor activates most oftne (Left or Right). If the left sensor is</span>
+<span class="comment">% triggered more often, the robot is probably going counter-clockwise</span>
+<span class="comment">% because it is turning to the left, and vice versa.</span>
+<span class="comment">%================ YOUR INPUT ENDS ===============</span>
+</pre>
+<img vspace="5" hspace="5" src="Lab3_3_starter_01.png" alt=""> <h2 id="8">TODO : Plot Two wheels' speed data</h2>
+<pre class="codeinput">figure(2)
+plot(logTime, logSpeed, <span class="string">'LineWidth'</span>, 2)
+xlabel(<span class="string">"Time (s)"</span>)
+ylabel(<span class="string">"Speed Data"</span>)
+legend({<span class="string">"Left Speed"</span>, <span class="string">"Right Speed"</span>})
+title(<span class="string">"Speed Sensor Data"</span>)
+
+<span class="comment">% Increasing the loop period makes my robot less accurate in following the</span>
+<span class="comment">% line. I imagine this is because the robot misses valuable input time</span>
+<span class="comment">% where one of the line sensors triggers, but the robot has to wait to</span>
+<span class="comment">% react to the sensor data until the next time cycle, which in some cases</span>
+<span class="comment">% results in the robot going off the track completely (especially at the</span>
+<span class="comment">% start of turns).</span>
+<span class="comment">%================ YOUR INPUT ENDS ===============</span>
+</pre>
+<img vspace="5" hspace="5" src="Lab3_3_starter_02.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+% ==================== Lab 3-3: Line Tracing (Solution) ==================== %
+% Uses three line sensors (L1, M, L2). Sensor = 1 when over black line.
+close all
+
+% REPLACE_WITH_DASH_DASH- Adjust COM port to match your Micro:bit (check Device Manager / ls /dev/tty* on Mac/Linux)
+% To list available ports in MATLAB, run:
+% ports = serialportlist("available");
+port = "COM9";
+baud = 115200;
+
+if exist("s","var")
+    if isvalid(s)
+        clear s
+        pause(0.5)
+    end
+end
+s = serialport(port, baud);
+configureTerminator(s, "LF");
+flush(s);
+
+% REPLACE_WITH_DASH_DASH- Controller parameters (tune as needed; 0-255 range)
+N         = 100;  % number of control iterations
+Ts        = 0.01;  % loop period (s)
+
+% REPLACE_WITH_DASH_DASH- Logging arrays
+logSensors = zeros(N,3);   % [L1 M R1]
+logSpeed   = zeros(N,2);   % [Speed_L Speed_R] from Micro:bit (if provided)
+logCmd     = zeros(N,2);   % [uL uR] sent
+logTime    = zeros(N,1);
+
+% REPLACE_WITH_DASH_DASH- Ensure robot starts from stop
+writeline(s, sprintf("%d,%d", 0, 0));
+
+
+%% TODO: Any setting that you need to run for loop.
+
+
+%================ YOUR INPUT ENDS ===============
+tic; % Initialize the timer to zero
+for i = 1:N
+    %Read the last line in communication buffer
+    lastLine = "";
+    while(s.NumBytesAvailable<1) % Wait until buffer has some line.       
+    end
+    if s.NumBytesAvailable > 0        
+        while s.NumBytesAvailable > 0
+            % Read one line at a time
+            lastLine = readline(s);
+        end        
+    end
+    line = lastLine;
+    t = toc;
+
+    nums = str2double(split(strtrim(line), ",")); %[L1,M,R2,SpeedL,SpeedR]
+    
+    if numel(nums) < 5 || any(isnan(nums(1:5)))
+        % If malformed, keep last command and continue
+        fprintf("[%f] Malformed: %s\n", t, line);
+        pause(Ts); 
+        continue; % This skips the lines below and iterate.
+    end
+
+    % Initialize the current sensor readings variable to NaN=Not-a-Number
+    L1 = NaN; %L1 sensor value
+    M  = NaN; %M sensor value
+    R1 = NaN; %R1 sensor value
+    sL = NaN; %speed of Left wheel value
+    sR = NaN; %speed of Right wheel value
+    
+    %% TODO: Update L1, M, R1, sL, sR with the current 
+    L1 = nums(1);
+    M = nums(2);
+    R1 = nums(3);
+    sL = nums(4);
+    sR = nums(5);
+
+    %============== YOUR INPUT ENDS===============
+
+    logSensors(i,:) = [L1 M R1];
+    logSpeed(i,:)   = [sL sR];
+    logTime(i,:) = t;
+
+    % REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH Line-following logic REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH %
+    uL = 0; % control input to left motor, integer [0, 255]
+    uR = 0; % control input to right motor, integer [0, 255]
+    
+    %% TODO: Update uL, uR using your logic to trace the line track
+    % CCW First
+    
+
+    if (L1 == 1)     % Left Sensor detection
+        uL = 40;
+        uR = 130;
+
+    elseif (R1 == 1) % Right Sensor detection     
+        uL = 130;
+        uR = 40;
+
+    else             % Go straight
+        uL = 70;
+        uR = 70;
+    end
+
+    % My control idea is essentially to just go straight unless the left or
+    % right line sensor gets triggered. If the left gets triggered, the
+    % robot needs to turn to the left to stay on the track so it drives
+    % the right wheel faster than the left. And conversely for the right
+    % sensor, the robot needs to turn right so I drive the left wheel faster
+    % than the right until the sensor stops getting triggered. It handled
+    % straight sections great, and usualy only has to correct a little at
+    % the end of every turn. This code is nice because it doesn't depend on
+    % any sensors being active to go forwards. This means loss of the line
+    % isn't fatal unless the line isn't in between the sensors.
+    %============== YOUR INPUT ENDS===============
+
+    % Send motor command
+    cmd = sprintf("%d,%d", uL, uR);
+    writeline(s, cmd);
+    logCmd(i,:) = [uL uR];
+
+    % Optional console log
+    fprintf("[%s] L1 M R2 = [%d %d %d]  Speeds=[%.1f %.1f]  Cmd=%s\n", ...
+        string(t), L1, M, R1, sL, sR, cmd);
+
+
+    pause(Ts); %control loop pause
+end
+
+% REPLACE_WITH_DASH_DASH- Stop and cleanup
+writeline(s, sprintf("%d,%d", 0, 0));
+clear s
+
+%% TODO : Plot L1, M, R1 sensor data
+figure(1)
+plot(logTime, logSensors, 'LineWidth', 2)
+xlabel("Time (s)")
+ylabel("Sensor Data")
+legend({"L1", "M", "R1"})
+title("Line Sensor Data")
+
+% You can infer which direction the robot is going around the track by
+% which sensor activates most oftne (Left or Right). If the left sensor is
+% triggered more often, the robot is probably going counter-clockwise
+% because it is turning to the left, and vice versa.
+%================ YOUR INPUT ENDS ===============
+
+%% TODO : Plot Two wheels' speed data
+figure(2)
+plot(logTime, logSpeed, 'LineWidth', 2)
+xlabel("Time (s)")
+ylabel("Speed Data")
+legend({"Left Speed", "Right Speed"})
+title("Speed Sensor Data")
+
+% Increasing the loop period makes my robot less accurate in following the
+% line. I imagine this is because the robot misses valuable input time
+% where one of the line sensors triggers, but the robot has to wait to
+% react to the sensor data until the next time cycle, which in some cases
+% results in the robot going off the track completely (especially at the
+% start of turns).
+%================ YOUR INPUT ENDS ===============
+##### SOURCE END #####
+-->
+</body>
+</html>

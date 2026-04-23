@@ -1,0 +1,507 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Lab3_2_starter</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-10-22">
+<meta name="DC.source" content="Lab3_2_starter.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">TODO change each motor input for experiment</a>
+</li>
+<li>
+<a href="#3">TODO Check if your motor input is integer and [0, 255] and Stop Code</a>
+</li>
+<li>
+<a href="#4">TODO: Preallocate array to store [L1, M, R1, Speed_L, Speed_R] and timestamp array</a>
+</li>
+<li>
+<a href="#5">==================== Data Collection Loop ==================== %% flush(s);</a>
+</li>
+<li>
+<a href="#6">TODO : store numbers into an array</a>
+</li>
+<li>
+<a href="#8">TODO : Plot Two wheels' speed data</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">
+<span class="comment">% ==================== Lab 3-2: Serial Data Sending ==================== %</span>
+<span class="comment">% This script sends two numbers to the Micro:bit as a comma-separated line.</span>
+clear
+close <span class="string">all</span>
+
+<span class="comment">% --- Adjust COM port to match your Micro:bit (check Device Manager / ls /dev/tty* on Mac/Linux)</span>
+<span class="comment">% To list available ports in MATLAB, run:</span>
+<span class="comment">% ports = serialportlist("available");</span>
+port = <span class="string">"COM9"</span>;
+baud = 115200;
+
+<span class="comment">% --- If a serial object 's' already exists, clear it</span>
+<span class="keyword">if</span> exist(<span class="string">"s"</span>,<span class="string">"var"</span>)
+    <span class="keyword">if</span> isvalid(s)
+        clear <span class="string">s</span>
+        pause(0.5)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% --- Create serialport object</span>
+s = serialport(port, baud);
+configureTerminator(s, <span class="string">"LF"</span>);  <span class="comment">% Micro:bit expects newline</span>
+</pre>
+<h2 id="2">TODO change each motor input for experiment</h2>
+<pre class="codeinput">leftMotorInput = 75;    <span class="comment">% could represent left motor input</span>
+rightMotorInput= 75;    <span class="comment">% could represent right motor input</span>
+</pre>
+<h2 id="3">TODO Check if your motor input is integer and [0, 255] and Stop Code</h2>
+<pre class="codeinput">
+<span class="keyword">if</span> (isscalar(leftMotorInput) &amp;&amp; isscalar(rightMotorInput) &amp;&amp; <span class="keyword">...</span>
+        all(isfinite([leftMotorInput, rightMotorInput])) &amp;&amp; <span class="keyword">...</span>
+        all(mod([leftMotorInput, rightMotorInput], 1) == 0) &amp;&amp; <span class="keyword">...</span>
+        all([leftMotorInput, rightMotorInput] &gt;= 0) &amp;&amp; <span class="keyword">...</span>
+        all([leftMotorInput, rightMotorInput] &lt;= 255))
+        <span class="comment">% then the input is valid, let it pass through</span>
+<span class="keyword">else</span>
+    writeline(s, <span class="string">"0,0"</span>);
+    warning(<span class="string">"Invalid motor inputs, stop command sent. Values must be integers within the range [0, 255]"</span>);
+    <span class="keyword">return</span>
+
+<span class="keyword">end</span>
+<span class="comment">%================ YOUR INPUT ENDS ===============</span>
+
+outStr = sprintf(<span class="string">"%d,%d"</span>, leftMotorInput, rightMotorInput);
+
+<span class="comment">% --- Send one line (terminator appended automatically)</span>
+writeline(s, outStr);
+disp(<span class="string">"Sent to Micro:bit: "</span> + outStr);
+
+
+<span class="comment">% ==================== Initialize Arrays ==================== %</span>
+N = 50;                        <span class="comment">% Number of samples to read</span>
+</pre>
+<pre class="codeoutput">Sent to Micro:bit: 75,75
+</pre>
+<h2 id="4">TODO: Preallocate array to store [L1, M, R1, Speed_L, Speed_R] and timestamp array</h2>
+<pre class="codeinput">lineData = zeros(N, 3);
+Speed_L = zeros(N, 1);
+Speed_R = zeros(N, 1);
+timestamp = zeros(1);
+
+<span class="comment">%================ YOUR INPUT ENDS ===============</span>
+</pre>
+<h2 id="5">==================== Data Collection Loop ==================== %% flush(s);</h2>
+<pre class="codeinput">tic; <span class="comment">% Initialize the timer to zero</span>
+<span class="keyword">for</span> i = 1:N
+    <span class="comment">% Read one line from serial</span>
+    t = toc;
+    line = readline(s);
+
+    <span class="comment">% Convert comma-separated string to numeric array</span>
+    nums = str2double(split(strtrim(line), <span class="string">","</span>));
+
+    <span class="comment">% nums format: [L1, M, R1, Speed_Left, Speed_Right]</span>
+    <span class="keyword">if</span> length(nums) == 5
+</pre>
+<h2 id="6">TODO : store numbers into an array</h2>
+<pre class="codeinput">        lineData(i, :) = nums(1:3);
+        Speed_L(i, :) = nums(4);
+        Speed_R(i, :) = nums(5);
+        timestamp(i) = t;
+
+        <span class="comment">%================ YOUR INPUT ENDS ===============</span>
+
+        <span class="comment">% Optional: Display received values with timestamp</span>
+        fprintf(<span class="string">"[%f] Received: "</span>, t);
+        disp(nums');
+</pre>
+<pre class="codeoutput">[0.000739] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.031602] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.097405] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.172897] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.251608] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.331204] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.413638] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.475131] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.552614] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.631308] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.711811] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.790368] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.869378] Received:      0     0     0     0     0
+
+</pre>
+<pre class="codeoutput">[0.948296] Received:          0         0         0    5.4000    5.2000
+
+</pre>
+<pre class="codeoutput">[1.012081] Received:          0         0         0    5.4000    5.2000
+
+</pre>
+<pre class="codeoutput">[1.090632] Received:          0         0         0    5.4000    5.2000
+
+</pre>
+<pre class="codeoutput">[1.170262] Received:          0         0    1.0000    7.4000    7.6000
+
+</pre>
+<pre class="codeoutput">[1.249216] Received:          0    1.0000    1.0000    7.4000    7.6000
+
+</pre>
+<pre class="codeoutput">[1.313626] Received:     1.0000    1.0000    1.0000    7.4000    7.6000
+
+</pre>
+<pre class="codeoutput">[1.395045] Received:     1.0000         0         0    7.4000    7.6000
+
+</pre>
+<pre class="codeoutput">[1.473146] Received:          0         0         0    8.8000    8.6000
+
+</pre>
+<pre class="codeoutput">[1.552342] Received:          0         0         0    8.8000    8.6000
+
+</pre>
+<pre class="codeoutput">[1.632152] Received:          0         0         0    8.8000    8.6000
+
+</pre>
+<pre class="codeoutput">[1.696989] Received:          0         0         0    9.8000    9.6000
+
+</pre>
+<pre class="codeoutput">[1.778387] Received:          0         0         0    9.8000    9.6000
+
+</pre>
+<pre class="codeoutput">[1.853855] Received:          0         0         0    9.8000    9.6000
+
+</pre>
+<pre class="codeoutput">[1.929681] Received:          0         0         0   11.6000   11.6000
+
+</pre>
+<pre class="codeoutput">[2.009725] Received:          0         0         0   11.6000   11.6000
+
+</pre>
+<pre class="codeoutput">[2.072762] Received:          0         0         0   11.6000   11.6000
+
+</pre>
+<pre class="codeoutput">[2.152230] Received:          0         0         0   14.6000   14.4000
+
+</pre>
+<pre class="codeoutput">[2.231611] Received:          0         0         0   14.6000   14.4000
+
+</pre>
+<pre class="codeoutput">[2.311845] Received:          0         0         0   14.6000   14.4000
+
+</pre>
+<pre class="codeoutput">[2.390567] Received:          0    1.0000         0   14.6000   14.4000
+
+</pre>
+<pre class="codeoutput">[2.454337] Received:          0         0         0   19.8000   19.6000
+
+</pre>
+<pre class="codeoutput">[2.532374] Received:          0         0         0   19.8000   19.6000
+
+</pre>
+<pre class="codeoutput">[2.611615] Received:          0         0         0   19.8000   19.6000
+
+</pre>
+<pre class="codeoutput">[2.692069] Received:          0         0         0   23.4000   22.2000
+
+</pre>
+<pre class="codeoutput">[2.770856] Received:          0         0         0   23.4000   22.2000
+
+</pre>
+<pre class="codeoutput">[2.834162] Received:          0         0         0   23.4000   22.2000
+
+</pre>
+<pre class="codeoutput">[2.914249] Received:          0         0         0   22.4000   21.8000
+
+</pre>
+<pre class="codeoutput">[2.993461] Received:          0         0    1.0000   22.4000   21.8000
+
+</pre>
+<pre class="codeoutput">[3.073007] Received:     1.0000    1.0000         0   22.4000   21.8000
+
+</pre>
+<pre class="codeoutput">[3.151014] Received:          0         0         0   22.4000   21.8000
+
+</pre>
+<pre class="codeoutput">[3.215473] Received:          0         0         0   19.8000   19.6000
+
+</pre>
+<pre class="codeoutput">[3.297860] Received:          0         0         0   19.8000   19.6000
+
+</pre>
+<pre class="codeoutput">[3.374508] Received:          0         0         0   19.8000   19.6000
+
+</pre>
+<pre class="codeoutput">[3.455952] Received:          0         0         0    4.6000    5.0000
+
+</pre>
+<pre class="codeoutput">[3.534175] Received:          0         0         0    4.6000    5.0000
+
+</pre>
+<pre class="codeoutput">[3.598557] Received:          0         0         0    4.6000    5.0000
+
+</pre>
+<pre class="codeoutput">[3.677973] Received:          0         0         0    1.8000    2.2000
+
+</pre>
+<pre class="codeinput">    <span class="keyword">end</span>
+
+
+<span class="keyword">end</span>
+</pre>
+<h2 id="8">TODO : Plot Two wheels' speed data</h2>
+<pre class="codeinput">hold <span class="string">on</span>
+figure(1)
+p1 = plot(timestamp, Speed_L, <span class="string">'b'</span>, <span class="string">'LineWidth'</span>, 1.5, <span class="string">'DisplayName'</span>, <span class="string">'Left Wheel'</span>);
+p2 = plot(timestamp, Speed_R, <span class="string">'r'</span>, <span class="string">'LineWidth'</span>, 1.5, <span class="string">'DisplayName'</span>, <span class="string">'Right Wheel'</span>);
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">"Speed (cm/s)"</span>)
+legend([p1 p2])
+title(<span class="string">"Wheel Speeds"</span>)
+
+<span class="comment">% The dead zone of the motor inputs seems to be an input of around 14 or</span>
+<span class="comment">% 15, but this is quite jerky (I think due to the minor inconsistencies of</span>
+<span class="comment">% the wheel size due to its tread). Friction in the motor and with the</span>
+<span class="comment">% surface it's on prevent the wheels from moving with inputs lower than</span>
+<span class="comment">% this. Taking the robot off the table at an input of 15 made the wheel</span>
+<span class="comment">% speed go from around 0.2 - 0.4 cm/s to a relatively constant 1 cm/s,</span>
+<span class="comment">% which helps confirm my theory about the friction instability with the</span>
+<span class="comment">% wheels. The left and right wheel speeds were much more seperated when on</span>
+<span class="comment">% the table: when I held it in the air the two speeds matched almost</span>
+<span class="comment">% perfectly.</span>
+
+<span class="comment">%================ YOUR INPUT ENDS ===============</span>
+</pre>
+<img vspace="5" hspace="5" src="Lab3_2_starter_01.png" alt=""> <pre class="codeinput">stopStr = sprintf(<span class="string">"%d,%d"</span>, 0, 0); <span class="comment">% Stop the wheels</span>
+
+<span class="comment">% --- Send one line (terminator appended automatically)</span>
+writeline(s, stopStr);
+<span class="comment">% --- Clean up if done</span>
+clear <span class="string">s</span>
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+% ==================== Lab 3-2: Serial Data Sending ==================== %
+% This script sends two numbers to the Micro:bit as a comma-separated line.
+clear
+close all
+
+% REPLACE_WITH_DASH_DASH- Adjust COM port to match your Micro:bit (check Device Manager / ls /dev/tty* on Mac/Linux)
+% To list available ports in MATLAB, run:
+% ports = serialportlist("available");
+port = "COM9";     
+baud = 115200;
+
+% REPLACE_WITH_DASH_DASH- If a serial object 's' already exists, clear it
+if exist("s","var")
+    if isvalid(s)
+        clear s
+        pause(0.5)
+    end
+end
+
+% REPLACE_WITH_DASH_DASH- Create serialport object
+s = serialport(port, baud);
+configureTerminator(s, "LF");  % Micro:bit expects newline
+
+%% TODO change each motor input for experiment
+leftMotorInput = 75;    % could represent left motor input
+rightMotorInput= 75;    % could represent right motor input
+
+
+%% TODO Check if your motor input is integer and [0, 255] and Stop Code
+if (isscalar(leftMotorInput) && isscalar(rightMotorInput) && ...
+        all(isfinite([leftMotorInput, rightMotorInput])) && ...
+        all(mod([leftMotorInput, rightMotorInput], 1) == 0) && ...
+        all([leftMotorInput, rightMotorInput] >= 0) && ...
+        all([leftMotorInput, rightMotorInput] <= 255))
+        % then the input is valid, let it pass through
+else 
+    writeline(s, "0,0");
+    warning("Invalid motor inputs, stop command sent. Values must be integers within the range [0, 255]");
+    return
+
+end
+%================ YOUR INPUT ENDS ===============
+
+outStr = sprintf("%d,%d", leftMotorInput, rightMotorInput);
+
+% REPLACE_WITH_DASH_DASH- Send one line (terminator appended automatically)
+writeline(s, outStr);
+disp("Sent to Micro:bit: " + outStr);
+
+
+% ==================== Initialize Arrays ==================== %
+N = 50;                        % Number of samples to read
+%% TODO: Preallocate array to store [L1, M, R1, Speed_L, Speed_R] and timestamp array
+lineData = zeros(N, 3);
+Speed_L = zeros(N, 1);
+Speed_R = zeros(N, 1);
+timestamp = zeros(1);
+
+%================ YOUR INPUT ENDS ===============
+
+%% ==================== Data Collection Loop ==================== %%
+flush(s);
+tic; % Initialize the timer to zero
+for i = 1:N
+    % Read one line from serial
+    t = toc;
+    line = readline(s);
+    
+    % Convert comma-separated string to numeric array
+    nums = str2double(split(strtrim(line), ","));
+    
+    % nums format: [L1, M, R1, Speed_Left, Speed_Right]
+    if length(nums) == 5
+        %% TODO : store numbers into an array
+        lineData(i, :) = nums(1:3);
+        Speed_L(i, :) = nums(4);
+        Speed_R(i, :) = nums(5);
+        timestamp(i) = t;
+
+        %================ YOUR INPUT ENDS ===============
+
+        % Optional: Display received values with timestamp
+        fprintf("[%f] Received: ", t);
+        disp(nums');        
+    end
+    
+    
+end
+
+%% TODO : Plot Two wheels' speed data
+hold on
+figure(1)
+p1 = plot(timestamp, Speed_L, 'b', 'LineWidth', 1.5, 'DisplayName', 'Left Wheel');
+p2 = plot(timestamp, Speed_R, 'r', 'LineWidth', 1.5, 'DisplayName', 'Right Wheel');
+xlabel('Time (s)')
+ylabel("Speed (cm/s)")
+legend([p1 p2])
+title("Wheel Speeds")
+
+% The dead zone of the motor inputs seems to be an input of around 14 or 
+% 15, but this is quite jerky (I think due to the minor inconsistencies of
+% the wheel size due to its tread). Friction in the motor and with the
+% surface it's on prevent the wheels from moving with inputs lower than
+% this. Taking the robot off the table at an input of 15 made the wheel
+% speed go from around 0.2 - 0.4 cm/s to a relatively constant 1 cm/s,
+% which helps confirm my theory about the friction instability with the
+% wheels. The left and right wheel speeds were much more seperated when on
+% the table: when I held it in the air the two speeds matched almost
+% perfectly.
+
+%================ YOUR INPUT ENDS ===============
+
+%%
+stopStr = sprintf("%d,%d", 0, 0); % Stop the wheels
+
+% REPLACE_WITH_DASH_DASH- Send one line (terminator appended automatically)
+writeline(s, stopStr);
+% REPLACE_WITH_DASH_DASH- Clean up if done
+clear s
+
+##### SOURCE END #####
+-->
+</body>
+</html>
