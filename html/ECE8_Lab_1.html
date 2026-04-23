@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>ECE8_Lab_1</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-10-05">
+<meta name="DC.source" content="ECE8_Lab_1.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">Exercise 1 %% %Basic matrix and vector operations</a>
+</li>
+<li>
+<a href="#3">Exerise 2 %% %Plotting functions through Matlab</a>
+</li>
+<li>
+<a href="#4">Exercise 3 %% %Plotting car path from Initial Position to Target</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">
+<span class="comment">%ECE8 Lab 1</span>
+</pre>
+<h2 id="2">Exercise 1 %% %Basic matrix and vector operations</h2>
+<pre class="codeinput">
+<span class="comment">%Define all variables for later use, followed with semi-colons so they</span>
+<span class="comment">% don't show up in the terminal.</span>
+A = [8 1 6; 3 5 7; 4 9 2];
+B = [29 44 86; 1 66 37; 84 78 5];
+C = [7 3 9; 6 3 5; 7 6 5];
+x = [2; 7; 9];
+u = [9; 38; 45];
+
+<span class="comment">%Execute parts a, b, and c with the defined variables</span>
+<span class="comment">%Part (a)</span>
+(<span class="string">'Exercise 1'</span>)
+PartA = A*B + C
+
+<span class="comment">%Part (b)</span>
+PartB = A*x + B*u
+
+<span class="comment">%Part (c)</span>
+PartC = (1/3)*A*(x + u)
+</pre>
+<pre class="codeoutput">
+ans =
+
+    'Exercise 1'
+
+
+PartA =
+
+         744         889         764
+         686        1011         483
+         300         932         692
+
+
+PartB =
+
+        5880
+        4286
+        4034
+
+
+PartC =
+
+  152.3333
+  212.0000
+  185.6667
+
+</pre>
+<h2 id="3">Exerise 2 %% %Plotting functions through Matlab</h2>
+<pre class="codeinput">
+<span class="comment">% First, define all the variables to use later</span>
+<span class="comment">%Part (a)</span>
+x1 = 0:2:100;
+y1 = 0.1*x1;
+
+<span class="comment">%Part (b)</span>
+x2 = 0:0.1:2 * pi;
+y2 = sin(x2);
+
+<span class="comment">%Part (c)</span>
+x3 = 0:0.1:2 * pi;
+y3 = cos(x3);
+
+<span class="comment">% Now, for the individual plots</span>
+<span class="comment">% I will specify each plot as a seperate figure to have them all show up</span>
+<span class="comment">% seperately</span>
+figure(1)           <span class="comment">% First plot, y = 0.1x %</span>
+plot(x1, y1)
+title(<span class="string">'y = 0.1x'</span>)
+
+figure(2)           <span class="comment">% Second plot, y = sin(x) %</span>
+plot(x2, y2)
+title(<span class="string">'y = sin(x)'</span>)
+
+figure(3)           <span class="comment">% Third plot, y = cos(x) %</span>
+plot(x3, y3)
+title(<span class="string">'y = cos(x)'</span>)
+
+<span class="comment">% Now for the combined plot with all functions %</span>
+figure(4)
+hold <span class="string">on</span>
+plot(x1, y1, <span class="string">'r'</span>, <span class="string">'DisplayName'</span>, <span class="string">'y=0.1x'</span>)   <span class="comment">%I put some labeling on each</span>
+plot(x2, y2, <span class="string">'g'</span>, <span class="string">'DisplayName'</span>, <span class="string">'y=sin(x)'</span>) <span class="comment">%line to make it more readable</span>
+plot(x3, y3, <span class="string">'b'</span>, <span class="string">'DisplayName'</span>, <span class="string">'y=cos(x)'</span>)
+hold <span class="string">off</span>
+
+title(<span class="string">'Combined Functions Figure'</span>)           <span class="comment">%Label everything and</span>
+xlabel(<span class="string">'x'</span>)                                  <span class="comment">%create a legend</span>
+ylabel(<span class="string">'y'</span>)
+legend
+</pre>
+<img vspace="5" hspace="5" src="ECE8_Lab_1_01.png" alt=""> <img vspace="5" hspace="5" src="ECE8_Lab_1_02.png" alt=""> <img vspace="5" hspace="5" src="ECE8_Lab_1_03.png" alt=""> <img vspace="5" hspace="5" src="ECE8_Lab_1_04.png" alt=""> <h2 id="4">Exercise 3 %% %Plotting car path from Initial Position to Target</h2>
+<pre class="codeinput">load(<span class="string">'Lab1_Exercise3.mat'</span>)  <span class="comment">%First load the data</span>
+
+figure(5)
+hold <span class="string">on</span>                     <span class="comment">%Prepare the figure</span>
+
+<span class="comment">% Initial Location Marker</span>
+plot(xv(1), yv(1), <span class="keyword">...</span>
+    <span class="string">'Color'</span>, <span class="string">'r'</span>, <span class="keyword">...</span>
+    <span class="string">'Marker'</span>, <span class="string">'s'</span>, <span class="keyword">...</span>
+    <span class="string">'MarkerFaceColor'</span>, <span class="string">'r'</span>, <span class="keyword">...</span>
+    <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="keyword">...</span>
+    <span class="string">'DisplayName'</span>, <span class="string">'Initial Position'</span>);      <span class="comment">% a lot to read, but basically takes the first piece of data for x and y, plots a marker as a red square, and labels it as "Initial Position"</span>
+
+<span class="comment">% Plotting Car Path</span>
+plot(xv, yv, <span class="keyword">...</span>
+    <span class="string">'Color'</span>, <span class="string">'b'</span>, <span class="keyword">...</span>
+    <span class="string">'LineStyle'</span>, <span class="string">'--'</span>, <span class="keyword">...</span>
+    <span class="string">'LineWidth'</span>, 1.5, <span class="keyword">...</span>
+    <span class="string">'DisplayName'</span>, <span class="string">'Car Path'</span>);              <span class="comment">% Similar story. Creates a blue dashed line for the car's path, makes it a certain width, and labels it as "Car Path"</span>
+
+<span class="comment">% Plotting End Marker</span>
+plot(2, 0, <span class="keyword">...</span>
+    <span class="string">'Color'</span>, <span class="string">'g'</span>, <span class="keyword">...</span>
+    <span class="string">'Marker'</span>, <span class="string">'o'</span>, <span class="keyword">...</span>
+    <span class="string">'MarkerFaceColor'</span>, <span class="string">'g'</span>, <span class="keyword">...</span>
+    <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="keyword">...</span>
+    <span class="string">'DisplayName'</span>, <span class="string">'Target'</span>);                <span class="comment">% Almost Identical to the initial location marker, but we make it a green circle and call it "Target"</span>
+
+<span class="comment">% Labels</span>
+xlabel(<span class="string">'x position (m)'</span>)                <span class="comment">%Label all the axis and legend to make everything more readable</span>
+ylabel(<span class="string">'y position (m)'</span>)
+title(<span class="string">'Car Pathing Towards Target'</span>)
+legend(<span class="string">'Location'</span>, <span class="string">'best'</span>)
+hold <span class="string">off</span>
+</pre>
+<img vspace="5" hspace="5" src="ECE8_Lab_1_05.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%ECE8 Lab 1
+
+%% Exercise 1 %%
+%Basic matrix and vector operations
+%Define all variables for later use, followed with semi-colons so they 
+% don't show up in the terminal.
+A = [8 1 6; 3 5 7; 4 9 2];
+B = [29 44 86; 1 66 37; 84 78 5];
+C = [7 3 9; 6 3 5; 7 6 5];
+x = [2; 7; 9];
+u = [9; 38; 45];
+
+%Execute parts a, b, and c with the defined variables
+%Part (a)
+('Exercise 1')
+PartA = A*B + C
+
+%Part (b)
+PartB = A*x + B*u
+
+%Part (c)
+PartC = (1/3)*A*(x + u)
+
+%% Exerise 2 %%
+%Plotting functions through Matlab
+              
+% First, define all the variables to use later
+%Part (a)           
+x1 = 0:2:100;
+y1 = 0.1*x1;
+
+%Part (b)
+x2 = 0:0.1:2 * pi;
+y2 = sin(x2);
+
+%Part (c)
+x3 = 0:0.1:2 * pi;
+y3 = cos(x3);
+
+% Now, for the individual plots
+% I will specify each plot as a seperate figure to have them all show up
+% seperately
+figure(1)           % First plot, y = 0.1x %
+plot(x1, y1)
+title('y = 0.1x')
+
+figure(2)           % Second plot, y = sin(x) %
+plot(x2, y2)
+title('y = sin(x)')
+
+figure(3)           % Third plot, y = cos(x) %
+plot(x3, y3)
+title('y = cos(x)')
+
+% Now for the combined plot with all functions %
+figure(4)
+hold on
+plot(x1, y1, 'r', 'DisplayName', 'y=0.1x')   %I put some labeling on each
+plot(x2, y2, 'g', 'DisplayName', 'y=sin(x)') %line to make it more readable
+plot(x3, y3, 'b', 'DisplayName', 'y=cos(x)')
+hold off
+
+title('Combined Functions Figure')           %Label everything and 
+xlabel('x')                                  %create a legend
+ylabel('y')
+legend
+
+
+%% Exercise 3 %%
+%Plotting car path from Initial Position to Target
+load('Lab1_Exercise3.mat')  %First load the data
+
+figure(5)
+hold on                     %Prepare the figure
+
+% Initial Location Marker
+plot(xv(1), yv(1), ...     
+    'Color', 'r', ...
+    'Marker', 's', ...
+    'MarkerFaceColor', 'r', ...
+    'LineStyle', 'none', ...
+    'DisplayName', 'Initial Position');      % a lot to read, but basically takes the first piece of data for x and y, plots a marker as a red square, and labels it as "Initial Position"
+
+% Plotting Car Path
+plot(xv, yv, ...                            
+    'Color', 'b', ...
+    'LineStyle', 'REPLACE_WITH_DASH_DASH', ...
+    'LineWidth', 1.5, ...
+    'DisplayName', 'Car Path');              % Similar story. Creates a blue dashed line for the car's path, makes it a certain width, and labels it as "Car Path"
+
+% Plotting End Marker
+plot(2, 0, ...
+    'Color', 'g', ...
+    'Marker', 'o', ...
+    'MarkerFaceColor', 'g', ...
+    'LineStyle', 'none', ...
+    'DisplayName', 'Target');                % Almost Identical to the initial location marker, but we make it a green circle and call it "Target"
+
+% Labels
+xlabel('x position (m)')                %Label all the axis and legend to make everything more readable
+ylabel('y position (m)')
+title('Car Pathing Towards Target')
+legend('Location', 'best')
+hold off
+
+##### SOURCE END #####
+-->
+</body>
+</html>

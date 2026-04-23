@@ -1,0 +1,18 @@
+A = [1 -2; 3 -4];
+
+[x1, x2] = meshgrid(linspace(-3, 3, 25));
+u = A(1,1)*x1 + A(1,2)*x2;
+v = A(2,1)*x1 + A(2,2)*x2;
+
+figure;
+quiver(x1,x2,u,v,'k');
+hold on;
+
+x_vals =
+grid on;
+
+x_label('x_1');
+y_label('x_2');
+
+title('Trajectory over x1 -> x2 plane');
+

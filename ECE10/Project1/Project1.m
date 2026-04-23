@@ -1,0 +1,132 @@
+clear;
+
+% First, import the given data for pose A and B for part A
+xA = 9.95;
+yA = -1.00;
+thetaA = 60.18;   %-->degrees
+rA = [12.34, 20.28, 8.7, 7.99, 12.05, 12.92];
+alphaA = [58.84, 38.78, -46.53, -7.17, 36.94, -13.77];
+
+xB = 11.78;
+yB = 9.28;
+thetaB = 134.07;  %-->degrees
+rB = [7.84, 10.95, 3.72];
+alphaB = [42.20, -16.95, 19.22];
+
+[MarkerCount, A_pts, B_inA, matches] = countMarkers(xA,yA,thetaA,rA,alphaA,xB,yB,thetaB,rB,alphaB);
+
+fprintf('\n         Part A\n\n')
+disp('Pose A marker coordinates in A reference frame:')
+disp(A_pts.')
+
+disp('Pose B marker coordinates converted to the A reference frame:')
+disp(B_inA.')
+
+fprintf('Number of matching markers: %d\n', matches);
+fprintf('Total number of markers detected: %d\n\n-----------------------------\n\n', MarkerCount);
+
+% Now for part B
+fprintf('         Part B\n\n')
+% Go through the data sets defined below
+for k = 2:4
+[xA,yA,thetaA,rA,alphaA,xB,yB,thetaB,rB,alphaB] = switchProjectData(k);
+
+MarkerCount = countMarkers(xA,yA,thetaA,rA,alphaA,xB,yB,thetaB,rB,alphaB);
+fprintf('Data Set %d detected markers: %d\n', k, MarkerCount)
+end
+
+
+function [MarkerCount, A_pts, B_inA, matches] = countMarkers(xA,yA,thetaA,rA,alphaA,xB,yB,thetaB,rB,alphaB)
+% Now convert pose A and B measurments of markers into cartesian
+Ax = rA .* cosd(alphaA);
+Ay = rA .* sind(alphaA);
+
+A_pts = [Ax; Ay];                      % Should be a 2x6
+
+% The B coordinates will be in the B-local frame
+Bx_local = rB .* cosd(alphaB);
+By_local = rB .* sind(alphaB);
+
+B_local = [Bx_local; By_local];         % Should be a 2x3
+
+% Define rotation matrices
+rotA = [cosd(thetaA) -sind(thetaA)
+        sind(thetaA) cosd(thetaA)];
+
+rotB = [cosd(thetaB) -sind(thetaB)
+        sind(thetaB) cosd(thetaB)];
+
+% First we convert the B coordinates into the global reference frame
+
+B_global = rotB * B_local + [xB; yB];
+
+% Now convert the global cords into the A reference frame
+
+B_inA = rotA' * (B_global - [xA; yA]);
+% rotA' here is the same as rotating by -theta, and is easier to write
+
+% Now to compare the markers, and count any matches that we find using the formula
+numA = size(A_pts, 2);
+numB = size(B_inA, 2);
+matches = 0;
+usedA = false(1, numA);
+% Create a list to keep track of which points are a match so that we don't double count
+for j = 1:numB
+    for i = 1:numA
+        d = norm(A_pts(:,i) - B_inA(:,j));
+
+        if d <= 1 && ~usedA(i)          % if the normalized distance is less than 1, and its not already a found match, add it as a match
+            matches = matches + 1;
+            usedA(i) = true;
+            break                       % break out once we find a match, and proceed to the next coordnate in the outer loop (the B cords)
+        end
+    end
+end
+
+MarkerCount = numA + numB - matches;    % The total number of markers will be the combined counted markers - how many were deteced by both (gives the intersection with B)
+end
+
+function [xA,yA,thetaA,rA,alphaA,xB,yB,thetaB,rB,alphaB] = switchProjectData(setNum);
+    switch setNum
+        case 2
+            xA = -8.58;
+            yA = -5.14;
+            thetaA = 88.82;
+            rA = [27.97, 34.90, 31.15, 24.95];
+            alphaA = [-47.79, -52.80, -39.26, -24.97];
+
+            xB = -7.52;
+            yB = -12.98;
+            thetaB = 30.05;
+            rB = [32.98, 37.91, 39.27, 36.90, 31.82];
+            alphaB = [22.53, 24.26, 16.18, 28.69, 41.75];
+
+        case 3
+            xA = 6.08;
+            yA = -7.94;
+            thetaA = 125.24; 
+            rA = [21.34, 25.91, 27.95, 22.57, 17.37];
+            alphaA = [-28.40, -36.41, -27.59, -47.29, -42.53];
+
+            xB = -14.15;
+            yB = 4.99;
+            thetaB = 19.53;
+            rB = [19.52, 24.49, 22.16, 26.57, 34.14, 22.85];
+            alphaB = [5.52, 12.49, 22.31, 0.61, -18.24, -8.66];
+    
+        case 4
+            xA = -7.26;
+            yA = -6.88;
+            thetaA = 55.57;
+            rA = [33.06, 30.43, 18.99, 22.38];
+            alphaA = [-8.27, -17.36, -12.93, -12.35];
+
+            xB = -11.02;
+            yB = 10.18;
+            thetaB = 58.01;
+            rB = [27.17, 16.91, 27.73];
+            alphaB = [-42.54, -56.53, -54.34];
+
+
+    end
+end
