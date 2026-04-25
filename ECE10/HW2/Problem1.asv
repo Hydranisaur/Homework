@@ -1,5 +1,4 @@
 clear;
-clc;
 close all;
 
 tspan = [0 15];
@@ -15,7 +14,7 @@ y0 = [-40; -36];
 
 x = y(:,1);
 xdot = y(:,2);
-% Essentially extract the first column and second column components from y to be
+% Essentially extract the first row and second row components from y to be
 % x and xdot
 
 % First plot x(t)
@@ -24,7 +23,7 @@ plot(t, x, 'g', 'LineWidth', 2)
 grid on
 xlabel('t (s)')
 ylabel('x (ft)')
-title('Position vs time')
+title('Displacement vs time')
 
 subplot(2,1,2)
 plot(t, xdot, 'r', 'LineWidth',2)
@@ -34,7 +33,7 @@ ylabel('dx/dt (ft/s)')
 title('Velocity vs time')
 
 tc = interp1(x, t, 0);
-fprintf('------Part B------\nApproximate tc where x(tc) = 0: %.3f s\n', tc);
+fprintf('------Part B------\nApproximate tc where x(tc) = 0: %.4f s\n', tc);
 
 % Now part b, using the tc we just solved for
 y0_dist = [-40; -36; 0];
@@ -45,7 +44,7 @@ x2 = y2(:,1);
 xdot2 = y2(:,2);
 s2 = y2(:,3);
 
-fprintf('Total distance traveled at t = tc: %.3f ft\n', s2(end));
+fprintf('Total distance traveled s(t) at t = tc')
 
 function dydt = particleODE(t,y)
 dydt = zeros(2,1);
