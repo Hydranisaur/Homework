@@ -11,7 +11,7 @@ tspan = [0 15];
 y0 = [-40; -36];
 
 % Now solve using ode45
-[t,y] = ode45(@particleODE, tspan, y0);
+[t, y] = ode45(@particleODE, tspan, y0);
 
 x = y(:,1);
 xdot = y(:,2);
